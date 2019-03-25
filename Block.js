@@ -16,7 +16,11 @@ Block.prototype.setup = function() {
 };
 
 Block.prototype.update = function() {
-    this.dropTimer += 1;
+    if(keys[KEY_SPEED_UP])
+        this.dropTimer += 4;
+    else
+        this.dropTimer += 1
+
     if (this.dropTimer >= 20) {
         this.dropTimer = 0;
         this.pos[2] -= 1;
@@ -123,5 +127,5 @@ Block.prototype.getOccupiedBlocks = function() {
 }
 
 function getRandomColor() {
-    return Math.floor(Math.random() * 6);
+    return Math.floor(Math.random() * 6) + 1;
 }

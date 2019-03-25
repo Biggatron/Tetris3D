@@ -36,5 +36,7 @@ var KEY_ROTATE_Y_C = keyCode('X');
 var KEY_ROTATE_Z = keyCode('D');
 var KEY_ROTATE_Z_C = keyCode('C');
 
+var KEY_SPEED_UP = '32';
+
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
