@@ -14,6 +14,8 @@ var index = 0;
 var lineIndex = 0;
 var linePlayFieldIndex = 24;
 var lineBlockIndex = 40;
+var cubeIndex = 24;
+var cubeTriIndex = 36;
 
 var pointsArray = [];
 var linePointsArray = [];
@@ -41,36 +43,48 @@ var eye;
 var at = vec3(0.0, 10.0, 0.0);
 var up = vec3(0.0, 1.0, 0.0);
 
+var cube = [
+    vec4(0.0, 0.0, 0.0, 1),
+    vec4(1.0, 0.0, 0.0, 1),
+    vec4(1.0, 0.0, 1.0, 1),
+    vec4(0.0, 0.0, 1.0, 1),
+
+    vec4(0.0, 1.0, 0.0, 1),
+    vec4(1.0, 1.0, 0.0, 1),
+    vec4(1.0, 1.0, 1.0, 1),
+    vec4(0.0, 1.0, 1.0, 1),
+]
+
 var pFV = [
     vec4(0.0, 20.0, 6.0, 1),
     vec4(0.0, 20.0, 0.0, 1),
     vec4(6.0, 20.0, 6.0, 1),
     vec4(6.0, 20.0, 0.0, 1),
 
-    vec4( 0.0, 0.0, 6.0, 1),
-    vec4( 0.0, 0.0, 0.0, 1),
-    vec4( 6.0, 0.0, 6.0, 1),
-    vec4( 6.0, 0.0, 0.0, 1),
+    vec4(0.0, 0.0, 6.0, 1),
+    vec4(0.0, 0.0, 0.0, 1),
+    vec4(6.0, 0.0, 6.0, 1),
+    vec4(6.0, 0.0, 0.0, 1),
 ]
 
 var b1V = [
-    vec4( 0.0, 1.0, 0.0, 1),
-    vec4( 0.0, 1.0, 1.0, 1),
-    vec4( 1.0, 1.0, 0.0, 1),
-    vec4( 1.0, 1.0, 1.0, 1),
-    vec4( 2.0, 1.0, 0.0, 1),
-    vec4( 2.0, 1.0, 1.0, 1),
-    vec4( 3.0, 1.0, 0.0, 1),
-    vec4( 3.0, 1.0, 1.0, 1),
+    vec4(0.0, 1.0, 0.0, 1),
+    vec4(0.0, 1.0, 1.0, 1),
+    vec4(1.0, 1.0, 0.0, 1),
+    vec4(1.0, 1.0, 1.0, 1),
+    vec4(2.0, 1.0, 0.0, 1),
+    vec4(2.0, 1.0, 1.0, 1),
+    vec4(3.0, 1.0, 0.0, 1),
+    vec4(3.0, 1.0, 1.0, 1),
 
-    vec4( 0.0, 0.0, 0.0, 1),
-    vec4( 0.0, 0.0, 1.0, 1),
-    vec4( 1.0, 0.0, 0.0, 1),
-    vec4( 1.0, 0.0, 1.0, 1),
-    vec4( 2.0, 0.0, 0.0, 1),
-    vec4( 2.0, 0.0, 1.0, 1),
-    vec4( 3.0, 0.0, 0.0, 1),
-    vec4( 3.0, 0.0, 1.0, 1)
+    vec4(0.0, 0.0, 0.0, 1),
+    vec4(0.0, 0.0, 1.0, 1),
+    vec4(1.0, 0.0, 0.0, 1),
+    vec4(1.0, 0.0, 1.0, 1),
+    vec4(2.0, 0.0, 0.0, 1),
+    vec4(2.0, 0.0, 1.0, 1),
+    vec4(3.0, 0.0, 0.0, 1),
+    vec4(3.0, 0.0, 1.0, 1)
 ]
 
 var b2V = [
@@ -101,11 +115,11 @@ function triangle(a, b, c) {
     pointsArray.push(c);
 
     // normals are vectors
-
-    normalsArray.push(a[0], a[1], a[2], 0.0);
-    normalsArray.push(b[0], b[1], b[2], 0.0);
-    normalsArray.push(c[0], c[1], c[2], 0.0);
-
+    /*
+        normalsArray.push(a[0], a[1], a[2], 0.0);
+        normalsArray.push(b[0], b[1], b[2], 0.0);
+        normalsArray.push(c[0], c[1], c[2], 0.0);
+    */
     index += 3;
 
 }
@@ -160,16 +174,82 @@ function block1() {
     line(b1V[7], b1V[15]);
     line(b1V[15], b1V[14]);
     line(b1V[14], b1V[6]);
+
+    triangle(b1V[0], b1V[6], b1V[1]);
+    triangle(b1V[1], b1V[6], b1V[7]);
+
+    triangle(b1V[8], b1V[14], b1V[0]);
+    triangle(b1V[0], b1V[14], b1V[6]);
+
+    triangle(b1V[9], b1V[15], b1V[8]);
+    triangle(b1V[8], b1V[15], b1V[14]);
+
+    triangle(b1V[1], b1V[7], b1V[9]);
+    triangle(b1V[9], b1V[7], b1V[15]);
+
+    triangle(b1V[9], b1V[8], b1V[1]);
+    triangle(b1V[1], b1V[8], b1V[0]);
+
+    triangle(b1V[14], b1V[15], b1V[6]);
+    triangle(b1V[6], b1V[15], b1V[7]);
 }
 
-function block2() {
+function block2() {}
+
+function buildCube() {
+    line(cube[0], cube[1]);
+    line(cube[1], cube[2]);
+    line(cube[2], cube[3]);
+    line(cube[3], cube[0]);
+
+    line(cube[4], cube[5]);
+    line(cube[5], cube[6]);
+    line(cube[6], cube[7]);
+    line(cube[7], cube[4]);
+
+    line(cube[0], cube[4]);
+    line(cube[1], cube[5]);
+    line(cube[2], cube[6]);
+    line(cube[3], cube[7]);
+
+    //Bot face
+    triangle(cube[0], cube[1], cube[2]);
+    triangle(cube[0], cube[2], cube[3]);
+
+    triangle(cube[3], cube[2], cube[6]);
+    triangle(cube[3], cube[6], cube[7]);
+
+    triangle(cube[0], cube[3], cube[7]);
+    triangle(cube[0], cube[7], cube[4]);
+
+    triangle(cube[1], cube[0], cube[4]);
+    triangle(cube[1], cube[4], cube[5]);
+
+    triangle(cube[2], cube[1], cube[5]);
+    triangle(cube[2], cube[5], cube[6]);
+
+    // top face
+    triangle(cube[7], cube[6], cube[5]);
+    triangle(cube[7], cube[5], cube[4]);
 }
+
+var cube = [
+    vec4(0.0, 0.0, 0.0, 1),
+    vec4(1.0, 0.0, 0.0, 1),
+    vec4(1.0, 0.0, 1.0, 1),
+    vec4(0.0, 0.0, 1.0, 1),
+
+    vec4(0.0, 1.0, 0.0, 1),
+    vec4(1.0, 1.0, 0.0, 1),
+    vec4(1.0, 1.0, 1.0, 1),
+    vec4(0.0, 1.0, 1.0, 1),
+]
 
 window.onload = function init() {
 
     canvas = document.getElementById("gl-canvas");
     resizeCanvasToDisplaySize(canvas);
-    aspectRatio = canvas.width/canvas.height;
+    aspectRatio = canvas.width / canvas.height;
 
     gl = WebGLUtils.setupWebGL(canvas);
     if (!gl) {
@@ -183,6 +263,7 @@ window.onload = function init() {
 
     playField();
     block1();
+    buildCube();
 
     //
     //  Load shaders and initialize attribute buffers
@@ -197,6 +278,7 @@ window.onload = function init() {
 
     var vBuffer = gl.createBuffer();
     pointsArray = pointsArray.concat(linePointsArray);
+    console.log(pointsArray)
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
 
@@ -237,9 +319,9 @@ window.onload = function init() {
     // Event listener for mousewheel
     window.addEventListener("wheel", function(e) {
         if (e.deltaY > 0.0) {
-            zDist += 0.15;
+            zDist += 3;
         } else {
-            zDist -= 0.15;
+            zDist -= 3;
         }
     });
 
@@ -247,18 +329,18 @@ window.onload = function init() {
 }
 
 function resizeCanvasToDisplaySize(canvas) {
-   // look up the size the canvas is being displayed
-   const width = canvas.clientWidth;
-   const height = canvas.clientHeight;
+    // look up the size the canvas is being displayed
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
 
-   // If it's resolution does not match change it
-   if (canvas.width !== width || canvas.height !== height) {
-     canvas.width = width;
-     canvas.height = height;
-     return true;
-   }
+    // If it's resolution does not match change it
+    if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        return true;
+    }
 
-   return false;
+    return false;
 }
 
 
@@ -287,15 +369,14 @@ function render() {
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix));
     gl.uniformMatrix3fv(normalMatrixLoc, false, flatten(normalMatrix));
 
-    //gl.drawArrays(gl.TRIANGLES, 0, index);
-
     // Draw the playfield grid
     gl.uniform4fv(colorVecLoc, vec4(0.0, 0.0, 0.0, 1.0));
-    currIndex = 0;
+    currIndex = index;
     gl.drawArrays(gl.LINES, currIndex, linePlayFieldIndex);
     currIndex += linePlayFieldIndex;
 
     renderBlocks();
+    renderGrid();
 
 
     window.requestAnimFrame(render);

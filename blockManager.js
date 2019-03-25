@@ -8,7 +8,7 @@ var colors = [
     [1.0, 0.0, 0.0, 1.0], // red
     [1.0, 1.0, 0.0, 1.0], // yellow
     [0.0, 1.0, 0.0, 1.0], // green
-    [0.0, 0.0, 1.0, 1.0], // blue
+    [1.0, 0.65, 0.0, 1.0], // orange
     [1.0, 0.0, 1.0, 1.0], // magenta
     [0.0, 1.0, 1.0, 1.0], // cyan
 ];
@@ -64,12 +64,30 @@ var playFieldGrid = [
     ]
 ];
 
-function updateBlocks() {
-    if (blocks.length === 0) {
-        newBlock();
+function renderGrid() {
+    for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+            for (var k = 0; k < 20; k++) {
+                if (playFieldGrid[i][j][k] > 0) {
+                    var mv = modelViewMatrix;
+                    mv = mult(mv, translate(i, k, j));
+                    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(mv));
+                    gl.uniform4fv(colorVecLoc, colors[playFieldGrid[i][j][k]]);
+                    gl.drawArrays(gl.TRIANGLES, cubeTriIndex, cubeTriIndex);
+                    gl.uniform4fv(colorVecLoc, vec4(0.0, 0.0, 0.0, 1.0));
+                    gl.drawArrays(gl.LINES, currIndex, cubeIndex);
+                }
+            }
+        }
     }
+}
+
+function updateBlocks() {
     for (var i = 0; i < blocks.length; i++) {
         blocks[i].update();
+    }
+    if (blocks.length === 0) {
+        newBlock();
     }
 }
 
