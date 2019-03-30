@@ -373,8 +373,6 @@ function resizeCanvasToDisplaySize(canvas) {
 function render() {
 
     if (eatKey(KEY_NEW_GAME)) {
-        points = 0;
-        clearBlocks();
         newGame();
     }
 

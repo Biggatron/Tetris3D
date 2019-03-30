@@ -85,6 +85,8 @@ function newGame() {
                     [0,0,0,0,0,0]]);
     }
     playFieldGrid = field;
+    clearBlocks();
+    points = 0;
 }
 
 function renderGrid() {
@@ -184,5 +186,9 @@ function isLegal(block) {
 }
 
 function newBlock() {
-    blocks.push(new Block());
+    var block = new Block();
+    if(isLegal(block))
+        blocks.push(block);
+    else
+        newGame();
 }
