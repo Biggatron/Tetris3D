@@ -150,6 +150,8 @@ function addToGrid(pos1, pos2, pos3, color) {
 function clearRow(row) {
     playFieldGrid.splice(row, 1);
     playFieldGrid.push(EMPTY_ROW);
+
+    points = points + 1;
 }
 
 function shouldClearRow(row) {
