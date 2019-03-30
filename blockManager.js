@@ -85,7 +85,6 @@ function newGame() {
                     [0,0,0,0,0,0]]);
     }
     playFieldGrid = field;
-    console.log(field);
 }
 
 function renderGrid() {
@@ -104,6 +103,10 @@ function renderGrid() {
             }
         }
     }
+}
+
+function clearBlocks() {
+    blocks = [];
 }
 
 function updateBlocks() {
@@ -141,10 +144,7 @@ function addToGrid(pos1, pos2, pos3, color) {
             rowsToClear.push(pos3[2]);    
     }
 
-    rowsToClear.sort().reverse().map(row => {
-        clearRow(row);
-    });
-    
+    rowsToClear.sort().reverse().map(row => clearRow(row));
 }
 
 function clearRow(row) {

@@ -372,6 +372,12 @@ function resizeCanvasToDisplaySize(canvas) {
 
 function render() {
 
+    if (eatKey(KEY_NEW_GAME)) {
+        points = 0;
+        clearBlocks();
+        newGame();
+    }
+
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     updateBlocks();
