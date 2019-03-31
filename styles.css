@@ -12,27 +12,34 @@ body {
 }
 
 .container {
-    width: 70%;
-    height: 600px;
-    min-width: 800px;
-    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .container-sm {
-    display: flex;
-    width: 15%;
-    height: 100%;
+    display: inline-block;
     z-index: 2;
 }
 
-.container-sm div {
-    margin: auto;
+.left {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.right {
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }
 
 #gl-canvas {
-    postition: absolute;
+    position: absolute;
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 
