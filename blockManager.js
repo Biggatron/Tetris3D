@@ -96,10 +96,10 @@ function renderGrid() {
                     var mv = modelViewMatrix;
                     mv = mult(mv, translate(k, i, j));
                     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(mv));
-                    gl.uniform4fv(colorVecLoc, colors[playFieldGrid[i][j][k]]);
-                    gl.drawArrays(gl.TRIANGLES, cubeTriIndex, cubeTriIndex);
                     gl.uniform4fv(colorVecLoc, vec4(0.0, 0.0, 0.0, 1.0));
-                    gl.drawArrays(gl.LINES, currIndex, cubeIndex);
+                    gl.drawArrays(gl.LINES, currIndex, cubeLineIndex);
+                    gl.uniform4fv(colorVecLoc, colors[playFieldGrid[i][j][k]]);
+                    gl.drawArrays(gl.TRIANGLES, currIndex+cubeLineIndex, cube1TriIndex);
                 }
             }
         }
@@ -138,13 +138,13 @@ function addToGrid(pos1, pos2, pos3, color) {
     }
     if(shouldClearRow(pos3[2])) {
         if(rowsToClear.indexOf(pos3[2]) === -1)
-            rowsToClear.push(pos3[2]);    
+            rowsToClear.push(pos3[2]);
     }
 
     rowsToClear.sort().reverse().map(row => {
         clearRow(row);
     });
-    
+
 }
 
 function clearRow(row) {
@@ -164,6 +164,7 @@ function shouldClearRow(row) {
 
 function isLegal(block) {
     pos = block.getOccupiedBlocks();
+    console.log(pos);
     for (var i = 0; i < pos.length; i++) {
         if (pos[i][0] < 0 || 5 < pos[i][0]) {
             return false;

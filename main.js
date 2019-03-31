@@ -14,11 +14,11 @@ var index = 0;
 var lineIndex = 0;
 var linePlayFieldIndex = 24;
 var lineBlockIndex = 40;
-var cubeIndex = 24;
-var cubeTriIndex = 36;
+var cubeLineIndex = 24;
+var cube1TriIndex = 36;
+var cube2TriIndex = 60;
 
 var pointsArray = [];
-var linePointsArray = [];
 var normalsArray = [];
 
 var movement = false; // Do we rotate?
@@ -125,10 +125,8 @@ function triangle(a, b, c) {
 }
 
 function line(a, b) {
-    linePointsArray.push(a);
-    linePointsArray.push(b);
-
-    lineIndex += 2;
+    pointsArray.push(a);
+    pointsArray.push(b);
 }
 
 function playField() {
@@ -194,7 +192,63 @@ function block1() {
     triangle(b1V[6], b1V[15], b1V[7]);
 }
 
-function block2() {}
+function block2() {
+    // top
+    line(b2V[0], b2V[4]);
+    line(b2V[1], b2V[5]);
+    line(b2V[2], b2V[7]);
+    line(b2V[4], b2V[6]);
+    line(b2V[0], b2V[1]);
+    line(b2V[6], b2V[7]);
+
+    // bot
+    line(b2V[8], b2V[12]);
+    line(b2V[9], b2V[13]);
+    line(b2V[10], b2V[15]);
+    line(b2V[12], b2V[14]);
+    line(b2V[8], b2V[9]);
+    line(b2V[14], b2V[15]);
+
+    // Top to bot
+    line(b2V[0], b2V[8]);
+    line(b2V[1], b2V[9]);
+    line(b2V[2], b2V[10]);
+    line(b2V[3], b2V[11]);
+    line(b2V[4], b2V[12]);
+    line(b2V[5], b2V[13]);
+    line(b2V[6], b2V[14]);
+    line(b2V[7], b2V[15]);
+
+    triangle(b2V[0], b2V[4], b2V[1]);
+    triangle(b2V[1], b2V[4], b2V[5]);
+
+    triangle(b2V[5], b2V[6], b2V[3]);
+    triangle(b2V[3], b2V[6], b2V[7]);
+
+    triangle(b2V[8], b2V[12], b2V[0]);
+    triangle(b2V[0], b2V[12], b2V[4]);
+
+    triangle(b2V[12], b2V[14], b2V[4]);
+    triangle(b2V[4], b2V[14], b2V[6]);
+
+    triangle(b2V[9], b2V[8], b2V[1]);
+    triangle(b2V[1], b2V[8], b2V[0]);
+
+    triangle(b2V[14], b2V[15], b2V[6]);
+    triangle(b2V[6], b2V[15], b2V[7]);
+
+    triangle(b2V[11], b2V[9], b2V[3]);
+    triangle(b2V[3], b2V[9], b2V[1]);
+
+    triangle(b2V[15], b2V[11], b2V[7]);
+    triangle(b2V[7], b2V[11], b2V[3]);
+
+    triangle(b2V[8], b2V[9], b2V[12]);
+    triangle(b2V[12], b2V[9], b2V[13]);
+
+    triangle(b2V[11], b2V[15], b2V[13]);
+    triangle(b2V[13], b2V[15], b2V[14]);
+}
 
 function buildCube() {
     line(cube[0], cube[1]);
@@ -263,6 +317,7 @@ window.onload = function init() {
 
     playField();
     block1();
+    block2();
     buildCube();
 
     //
@@ -277,7 +332,6 @@ window.onload = function init() {
     gl.bufferData(gl.ARRAY_BUFFER, flatten(normalsArray), gl.STATIC_DRAW);
 
     var vBuffer = gl.createBuffer();
-    pointsArray = pointsArray.concat(linePointsArray);
     console.log(pointsArray)
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
@@ -371,7 +425,7 @@ function render() {
 
     // Draw the playfield grid
     gl.uniform4fv(colorVecLoc, vec4(0.0, 0.0, 0.0, 1.0));
-    currIndex = index;
+    currIndex = 0;
     gl.drawArrays(gl.LINES, currIndex, linePlayFieldIndex);
     currIndex += linePlayFieldIndex;
 
