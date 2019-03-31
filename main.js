@@ -7,6 +7,7 @@
 // ==========================
 
 var canvas;
+var points = 0;
 var gl;
 
 var currIndex;
@@ -369,6 +370,27 @@ window.onload = function init() {
         }
     });
 
+    canvas.addEventListener("touchstart", function(e){
+        movement = true;
+        origX =  e.clientX || e.targetTouches[0].pageX;
+        origY =  e.clientY || e.targetTouches[0].pageY;
+        e.preventDefault();         // Disable drag and drop
+    } );
+    canvas.addEventListener("touchend", function(e){
+        movement = false;
+    } );
+
+    canvas.addEventListener("touchmove", function(e){
+        if(movement) {
+            var currx =  e.clientX || e.targetTouches[0].pageX;
+            var curry =  e.clientY || e.targetTouches[0].pageY;
+    	    spinY += (currx - origX) % 360;
+            spinX += (curry - origY) % 360;
+            origX = currx;
+            origY = curry;
+        }
+    } );
+
 
     // Event listener for mousewheel
     window.addEventListener("wheel", function(e) {
@@ -380,6 +402,10 @@ window.onload = function init() {
     });
 
     render();
+}
+
+function renderPoints() {
+    document.getElementById("points").innerHTML = "Stig: " + points;
 }
 
 function resizeCanvasToDisplaySize(canvas) {
@@ -399,6 +425,10 @@ function resizeCanvasToDisplaySize(canvas) {
 
 
 function render() {
+
+    if (eatKey(KEY_NEW_GAME)) {
+        newGame();
+    }
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -431,6 +461,7 @@ function render() {
 
     renderBlocks();
     renderGrid();
+    renderPoints();
 
 
     window.requestAnimFrame(render);

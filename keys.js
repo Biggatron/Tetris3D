@@ -35,6 +35,7 @@ var KEY_ROTATE_Y = keyCode('S');
 var KEY_ROTATE_Y_C = keyCode('X');
 var KEY_ROTATE_Z = keyCode('D');
 var KEY_ROTATE_Z_C = keyCode('C');
+var KEY_NEW_GAME = keyCode('N');
 
 var KEY_SPEED_UP = '32';
 

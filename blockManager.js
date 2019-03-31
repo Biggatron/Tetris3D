@@ -85,7 +85,8 @@ function newGame() {
                     [0,0,0,0,0,0]]);
     }
     playFieldGrid = field;
-    console.log(field);
+    clearBlocks();
+    points = 0;
 }
 
 function renderGrid() {
@@ -104,6 +105,10 @@ function renderGrid() {
             }
         }
     }
+}
+
+function clearBlocks() {
+    blocks = [];
 }
 
 function updateBlocks() {
@@ -141,15 +146,21 @@ function addToGrid(pos1, pos2, pos3, color) {
             rowsToClear.push(pos3[2]);
     }
 
+<<<<<<< HEAD
     rowsToClear.sort().reverse().map(row => {
         clearRow(row);
     });
 
+=======
+    rowsToClear.sort().reverse().map(row => clearRow(row));
+>>>>>>> 9d9bf9f0d4b0ccbeec34cac9344be4652acc25ce
 }
 
 function clearRow(row) {
     playFieldGrid.splice(row, 1);
     playFieldGrid.push(EMPTY_ROW);
+
+    points = points + 1;
 }
 
 function shouldClearRow(row) {
@@ -183,5 +194,9 @@ function isLegal(block) {
 }
 
 function newBlock() {
-    blocks.push(new Block());
+    var block = new Block();
+    if(isLegal(block))
+        blocks.push(block);
+    else
+        newGame();
 }
