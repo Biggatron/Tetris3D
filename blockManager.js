@@ -146,14 +146,7 @@ function addToGrid(pos1, pos2, pos3, color) {
             rowsToClear.push(pos3[2]);
     }
 
-<<<<<<< HEAD
-    rowsToClear.sort().reverse().map(row => {
-        clearRow(row);
-    });
-
-=======
     rowsToClear.sort().reverse().map(row => clearRow(row));
->>>>>>> 9d9bf9f0d4b0ccbeec34cac9344be4652acc25ce
 }
 
 function clearRow(row) {
