@@ -76,7 +76,10 @@ newGame();
 
 function newGame() {
     var field = [];
-    for (var i = 0; i < 20; i++){
+    // 21 hæðir í notuð til að koma í veg fyrir villu ef snúið er kubbi
+    // þegar hann er í efstu línu.
+    // Leikur spilast ennþá miðað við 20 hæðir
+    for (var i = 0; i <= 20; i++){
         field.push([[0,0,0,0,0,0],
                     [0,0,0,0,0,0],
                     [0,0,0,0,0,0],
